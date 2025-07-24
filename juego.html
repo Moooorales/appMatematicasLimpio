@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Matemáticas - Juego</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="contenedor">
+        <h2>¿Cuánto es 2 + 3?</h2>
+        <button onclick="verificarRespuesta(4)">4</button>
+        <button onclick="verificarRespuesta(5)">5</button>
+        <button onclick="verificarRespuesta(6)">6</button>
+        <div id="resultado" class="respuesta"></div>
+        <audio id="audioCorrecto" src="audio/correcto.mp3" preload="auto"></audio>
+        <audio id="audioIncorrecto" src="audio/incorrecto.mp3" preload="auto"></audio>
+        <a href="index.html" class="boton volver">Volver al inicio</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

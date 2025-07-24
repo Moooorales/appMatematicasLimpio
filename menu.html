@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Matemáticas - Juegos</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Selecciona una operación para jugar</h1>
+        <div class="operaciones">
+            <button onclick="mostrarJuego('suma')">Suma</button>
+            <button onclick="mostrarJuego('resta')">Resta</button>
+            <button onclick="mostrarJuego('multiplicacion')">Multiplicación</button>
+            <button onclick="mostrarJuego('division')">División</button>
+        </div>
+        <div id="juego" class="juego-seccion"></div>
+        <a href="index.html" class="boton volver">Volver al Inicio</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
