@@ -260,14 +260,15 @@
 
       indicePreguntaSuma++;
 
-      setTimeout(() => {
-        if (indicePreguntaSuma < preguntasSuma.length) {
-          mostrarPreguntaSuma();
-        } else {
-          mostrarRecompensaSuma();
-        }
-      }, 2000);
-    }
+  // Esperar a que el video termine para pasar a la siguiente pregunta o mostrar recompensa
+video.addEventListener("ended", () => {
+  if (indicePreguntaSuma < preguntasSuma.length) {
+    mostrarPreguntaSuma();
+  } else {
+    mostrarRecompensaSuma();
+  }
+});
+
 
     function mostrarRecompensaSuma() {
       const resultadoDiv = document.getElementById("resultado-suma");
