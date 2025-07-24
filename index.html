@@ -98,12 +98,23 @@
         margin-bottom: 10px;
       }
     }
+      .matito-img {
+    display: block;
+    margin: 10px auto;
+    border-radius: 50%;
+  }
+
   </style>
 </head>
 <body>
-  <div class="contenedor">
-    <h1>¡Hola! Soy <span class="matito">Matito</span></h1>
-    <p>¿Listo para jugar y aprender matemáticas?</p>
+<div class="contenedor">
+  <h1>¡Hola! Soy <span class="matito">Matito</span></h1>
+  
+  <!-- Aquí va la imagen -->
+  <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
+
+  <p>¿Listo para jugar y aprender matemáticas?</p>
+
 
     <div class="botones-nav" id="menu-principal">
       <button onclick="mostrarSeccion('suma')">Suma</button>
