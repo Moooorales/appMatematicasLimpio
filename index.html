@@ -98,11 +98,27 @@
         margin-bottom: 10px;
       }
     }
-    
+
     .matito-img {
       display: block;
       margin: 10px auto;
       border-radius: 50%;
+    }
+
+    /* Estilos para opciones suma */
+    #opciones-suma button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #opciones-suma button:hover {
+      background-color: #1976d2;
     }
   </style>
 </head>
@@ -130,7 +146,7 @@
       <p id="pregunta-suma"></p>
       <div id="opciones-suma"></div>
       <div id="resultado-suma"></div>
-      <button class="volver" onclick="reiniciarSuma()">Volver al menú</button>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
     <!-- RESTA -->
@@ -280,7 +296,6 @@
       indicePreguntaSuma = 0;
       correctasSuma = 0;
       mostrarPreguntaSuma();
-      volverMenu();
     }
 
     // Mostrar sección y reiniciar suma si es la sección suma
@@ -320,4 +335,3 @@
   </script>
 </body>
 </html>
-
