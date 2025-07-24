@@ -98,24 +98,22 @@
         margin-bottom: 10px;
       }
     }
-      .matito-img {
-    display: block;
-    margin: 10px auto;
-    border-radius: 50%;
-  }
-
+    
+    .matito-img {
+      display: block;
+      margin: 10px auto;
+      border-radius: 50%;
+    }
   </style>
 </head>
 <body>
-<div class="contenedor">
-<h1>¡Hola! Soy <span class="matito">Isaac</span></h1>
+  <div class="contenedor">
+    <h1>¡Hola! Soy <span class="matito">Isaac</span></h1>
 
-  
-  <!-- Aquí va la imagen -->
-  <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
+    <!-- Imagen -->
+    <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
 
-  <p>¿Listo para jugar y aprender matemáticas?</p>
-
+    <p>¿Listo para jugar y aprender matemáticas?</p>
 
     <div class="botones-nav" id="menu-principal">
       <button onclick="mostrarSeccion('suma')">Suma</button>
@@ -129,12 +127,10 @@
     <!-- SUMA -->
     <div id="suma" class="seccion">
       <h2>Juegos de Suma</h2>
-      <p><strong>2 + 3 = ?</strong></p>
-      <button onclick="verificarRespuesta(4, 5)">4</button>
-      <button onclick="verificarRespuesta(5, 5)">5</button>
-      <button onclick="verificarRespuesta(6, 5)">6</button>
+      <p id="pregunta-suma"></p>
+      <div id="opciones-suma"></div>
       <div id="resultado-suma"></div>
-      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+      <button class="volver" onclick="reiniciarSuma()">Volver al menú</button>
     </div>
 
     <!-- RESTA -->
@@ -189,17 +185,122 @@
   </div>
 
   <script>
+    // Preguntas y lógica para SUMA con recompensas
+    const preguntasSuma = [
+      { pregunta: "2 + 3 = ?", opciones: [4, 5, 6], correcta: 5 },
+      { pregunta: "1 + 4 = ?", opciones: [4, 6, 5], correcta: 5 },
+      { pregunta: "3 + 3 = ?", opciones: [5, 6, 7], correcta: 6 }
+    ];
+
+    let indicePreguntaSuma = 0;
+    let correctasSuma = 0;
+
+    function mostrarPreguntaSuma() {
+      const preguntaDiv = document.getElementById("pregunta-suma");
+      const opcionesDiv = document.getElementById("opciones-suma");
+      const resultadoDiv = document.getElementById("resultado-suma");
+
+      resultadoDiv.innerHTML = ""; // limpiar resultado
+
+      // Mostrar la pregunta actual
+      preguntaDiv.textContent = preguntasSuma[indicePreguntaSuma].pregunta;
+
+      // Limpiar opciones previas
+      opcionesDiv.innerHTML = "";
+
+      // Crear botones para opciones
+      preguntasSuma[indicePreguntaSuma].opciones.forEach(opcion => {
+        const btn = document.createElement("button");
+        btn.textContent = opcion;
+        btn.onclick = () => verificarRespuestaSuma(opcion);
+        btn.style.margin = "5px";
+        opcionesDiv.appendChild(btn);
+      });
+    }
+
+    function verificarRespuestaSuma(respuesta) {
+      const resultadoDiv = document.getElementById("resultado-suma");
+      const correcta = preguntasSuma[indicePreguntaSuma].correcta;
+
+      resultadoDiv.innerHTML = "";
+
+      const video = document.createElement("video");
+      video.autoplay = true;
+      video.muted = false;
+      video.playsInline = true;
+      video.volume = 1.0;
+      video.style.display = "block";
+      video.style.margin = "10px auto";
+      video.width = 150;
+
+      if (respuesta === correcta) {
+        correctasSuma++;
+        video.src = "videos/correcto.mp4";
+      } else {
+        video.src = "videos/incorrecto2.mp4";
+      }
+
+      resultadoDiv.appendChild(video);
+
+      indicePreguntaSuma++;
+
+      setTimeout(() => {
+        if (indicePreguntaSuma < preguntasSuma.length) {
+          mostrarPreguntaSuma();
+        } else {
+          mostrarRecompensaSuma();
+        }
+      }, 2000);
+    }
+
+    function mostrarRecompensaSuma() {
+      const resultadoDiv = document.getElementById("resultado-suma");
+      resultadoDiv.innerHTML = "";
+
+      if (correctasSuma === preguntasSuma.length) {
+        resultadoDiv.innerHTML = `<h3>🎉 ¡Muy bien! Has ganado una estrella ⭐</h3>`;
+
+        const videoEstrella = document.createElement("video");
+        videoEstrella.src = "videos/estrella.mp4"; // video de la estrella
+        videoEstrella.autoplay = true;
+        videoEstrella.muted = false;
+        videoEstrella.playsInline = true;
+        videoEstrella.volume = 1.0;
+        videoEstrella.style.display = "block";
+        videoEstrella.style.margin = "10px auto";
+        videoEstrella.width = 150;
+
+        resultadoDiv.appendChild(videoEstrella);
+      } else {
+        resultadoDiv.innerHTML = `<h3>¡Sigue intentando! 💪</h3>`;
+      }
+    }
+
+    function reiniciarSuma() {
+      indicePreguntaSuma = 0;
+      correctasSuma = 0;
+      mostrarPreguntaSuma();
+      volverMenu();
+    }
+
+    // Mostrar sección y reiniciar suma si es la sección suma
     function mostrarSeccion(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById(id).classList.add('activo');
       document.getElementById('menu-principal').style.display = 'none';
+
+      if (id === "suma") {
+        reiniciarSuma();
+      }
     }
 
+    // Funciones originales para otras operaciones (puedes ajustar o implementar luego)
     function volverMenu() {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById('menu-principal').style.display = 'block';
     }
 
+    // Si quieres, para resto de juegos, puedes mantener verificarRespuesta simple o mejorar después
     function verificarRespuesta(respuesta, correcta = null) {
       let correcto = correcta !== null ? respuesta === correcta : respuesta === 5;
       const activo = document.querySelector('.seccion.activo');
