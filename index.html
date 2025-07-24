@@ -9,7 +9,6 @@
     * {
       box-sizing: border-box;
     }
-
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -20,7 +19,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .contenedor {
       background: #fff;
       padding: 20px;
@@ -30,19 +28,15 @@
       width: 600px;
       text-align: center;
     }
-
     h1 {
       color: #0d47a1;
     }
-
     .matito {
       color: #e91e63;
     }
-
     .botones-nav {
       margin: 20px 0;
     }
-
     .botones-nav button {
       margin: 5px;
       padding: 10px 20px;
@@ -53,19 +47,15 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     .botones-nav button:hover {
       background: #1976d2;
     }
-
     .seccion {
       display: none;
     }
-
     .activo {
       display: block;
     }
-
     .volver {
       margin-top: 15px;
       background: #9c27b0;
@@ -75,11 +65,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     .volver:hover {
       background: #7b1fa2;
     }
-
     video {
       margin-top: 15px;
       width: 100%;
@@ -87,24 +75,20 @@
       height: auto;
       border-radius: 10px;
     }
-
     @media screen and (max-width: 600px) {
       .contenedor {
         padding: 15px;
       }
-
       .botones-nav button {
         width: 100%;
         margin-bottom: 10px;
       }
     }
-
     .matito-img {
       display: block;
       margin: 10px auto;
       border-radius: 50%;
     }
-
     /* Estilos para opciones suma */
     #opciones-suma button {
       margin: 5px;
@@ -116,7 +100,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     #opciones-suma button:hover {
       background-color: #1976d2;
     }
@@ -260,15 +243,15 @@
 
       indicePreguntaSuma++;
 
-  // Esperar a que el video termine para pasar a la siguiente pregunta o mostrar recompensa
-video.addEventListener("ended", () => {
-  if (indicePreguntaSuma < preguntasSuma.length) {
-    mostrarPreguntaSuma();
-  } else {
-    mostrarRecompensaSuma();
-  }
-});
-
+      // Esperar a que el video termine para pasar a la siguiente pregunta o mostrar recompensa
+      video.addEventListener("ended", () => {
+        if (indicePreguntaSuma < preguntasSuma.length) {
+          mostrarPreguntaSuma();
+        } else {
+          mostrarRecompensaSuma();
+        }
+      });
+    }
 
     function mostrarRecompensaSuma() {
       const resultadoDiv = document.getElementById("resultado-suma");
@@ -310,13 +293,13 @@ video.addEventListener("ended", () => {
       }
     }
 
-    // Funciones originales para otras operaciones (puedes ajustar o implementar luego)
+    // Volver al menú principal
     function volverMenu() {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById('menu-principal').style.display = 'block';
     }
 
-    // Si quieres, para resto de juegos, puedes mantener verificarRespuesta simple o mejorar después
+    // Función para verificar respuesta en otros juegos
     function verificarRespuesta(respuesta, correcta = null) {
       let correcto = correcta !== null ? respuesta === correcta : respuesta === 5;
       const activo = document.querySelector('.seccion.activo');
