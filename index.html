@@ -91,7 +91,8 @@
     }
     #opciones-suma button,
     #opciones-resta button,
-    #opciones-multiplicacion button {
+    #opciones-multiplicacion button,
+    #opciones-division button {
       margin: 5px;
       padding: 10px 20px;
       font-size: 16px;
@@ -103,7 +104,8 @@
     }
     #opciones-suma button:hover,
     #opciones-resta button:hover,
-    #opciones-multiplicacion button:hover {
+    #opciones-multiplicacion button:hover,
+    #opciones-division button:hover {
       background-color: #1976d2;
     }
   </style>
@@ -148,10 +150,8 @@
 
     <div id="division" class="seccion">
       <h2>Juegos de División</h2>
-      <p><strong>6 ÷ 2 = ?</strong></p>
-      <button onclick="verificarRespuesta(2, 3)">2</button>
-      <button onclick="verificarRespuesta(3, 3)">3</button>
-      <button onclick="verificarRespuesta(4, 3)">4</button>
+      <p id="pregunta-division"></p>
+      <div id="opciones-division"></div>
       <div id="resultado-division"></div>
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
@@ -173,49 +173,33 @@
   </div>
 
   <script>
-    const preguntasSuma = [
-      { pregunta: "2 + 3 = ?", opciones: [4, 5, 6], correcta: 5 },
-      { pregunta: "1 + 4 = ?", opciones: [4, 6, 5], correcta: 5 },
-      { pregunta: "3 + 3 = ?", opciones: [5, 6, 7], correcta: 6 }
+    const preguntasDivision = [
+      { pregunta: "6 ÷ 2 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "8 ÷ 4 = ?", opciones: [1, 2, 3], correcta: 2 },
+      { pregunta: "9 ÷ 3 = ?", opciones: [2, 3, 4], correcta: 3 }
     ];
 
-    const preguntasResta = [
-      { pregunta: "5 - 2 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "4 - 1 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 }
-    ];
+    let indicePreguntaDivision = 0;
+    let correctasDivision = 0;
 
-    const preguntasMultiplicacion = [
-      { pregunta: "2 × 3 = ?", opciones: [5, 6, 7], correcta: 6 },
-      { pregunta: "4 × 2 = ?", opciones: [6, 7, 8], correcta: 8 },
-      { pregunta: "3 × 3 = ?", opciones: [6, 9, 12], correcta: 9 }
-    ];
-
-    let indicePreguntaSuma = 0;
-    let correctasSuma = 0;
-    let indicePreguntaResta = 0;
-    let correctasResta = 0;
-    let indicePreguntaMultiplicacion = 0;
-    let correctasMultiplicacion = 0;
-
-    function mostrarPreguntaMultiplicacion() {
-      const preguntaDiv = document.getElementById("pregunta-multiplicacion");
-      const opcionesDiv = document.getElementById("opciones-multiplicacion");
-      const resultadoDiv = document.getElementById("resultado-multiplicacion");
+    function mostrarPreguntaDivision() {
+      const preguntaDiv = document.getElementById("pregunta-division");
+      const opcionesDiv = document.getElementById("opciones-division");
+      const resultadoDiv = document.getElementById("resultado-division");
       resultadoDiv.innerHTML = "";
-      preguntaDiv.textContent = preguntasMultiplicacion[indicePreguntaMultiplicacion].pregunta;
+      preguntaDiv.textContent = preguntasDivision[indicePreguntaDivision].pregunta;
       opcionesDiv.innerHTML = "";
-      preguntasMultiplicacion[indicePreguntaMultiplicacion].opciones.forEach(opcion => {
+      preguntasDivision[indicePreguntaDivision].opciones.forEach(opcion => {
         const btn = document.createElement("button");
         btn.textContent = opcion;
-        btn.onclick = () => verificarRespuestaMultiplicacion(opcion);
+        btn.onclick = () => verificarRespuestaDivision(opcion);
         opcionesDiv.appendChild(btn);
       });
     }
 
-    function verificarRespuestaMultiplicacion(respuesta) {
-      const correcta = preguntasMultiplicacion[indicePreguntaMultiplicacion].correcta;
-      const resultadoDiv = document.getElementById("resultado-multiplicacion");
+    function verificarRespuestaDivision(respuesta) {
+      const correcta = preguntasDivision[indicePreguntaDivision].correcta;
+      const resultadoDiv = document.getElementById("resultado-division");
       resultadoDiv.innerHTML = "";
       const video = document.createElement("video");
       video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
@@ -223,67 +207,25 @@
       video.style.display = "block";
       video.width = 150;
       resultadoDiv.appendChild(video);
-      if (respuesta === correcta) correctasMultiplicacion++;
-      indicePreguntaMultiplicacion++;
+      if (respuesta === correcta) correctasDivision++;
+      indicePreguntaDivision++;
       video.onended = () => {
-        if (indicePreguntaMultiplicacion < preguntasMultiplicacion.length) mostrarPreguntaMultiplicacion();
-        else mostrarRecompensaMultiplicacion();
+        if (indicePreguntaDivision < preguntasDivision.length) mostrarPreguntaDivision();
+        else mostrarRecompensaDivision();
       };
     }
 
-    function mostrarRecompensaMultiplicacion() {
-      const resultadoDiv = document.getElementById("resultado-multiplicacion");
-      resultadoDiv.innerHTML = correctasMultiplicacion === preguntasMultiplicacion.length ?
-        '<h3>🎉 ¡Muy bien! Has ganado un billete 💵</h3><video src="videos/billete.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
+    function mostrarRecompensaDivision() {
+      const resultadoDiv = document.getElementById("resultado-division");
+      resultadoDiv.innerHTML = correctasDivision === preguntasDivision.length ?
+        '<h3>🎉 ¡Muy bien! Has ganado una moneda de oro 🪙</h3><video src="videos/oro.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
         '<h3>¡Sigue practicando! 💪</h3>';
     }
 
-    function reiniciarSuma() {
-      indicePreguntaSuma = 0;
-      correctasSuma = 0;
-      mostrarPreguntaSuma();
-    }
-
-    function reiniciarResta() {
-      indicePreguntaResta = 0;
-      correctasResta = 0;
-      mostrarPreguntaResta();
-    }
-
-    function reiniciarMultiplicacion() {
-      indicePreguntaMultiplicacion = 0;
-      correctasMultiplicacion = 0;
-      mostrarPreguntaMultiplicacion();
-    }
-
-    function mostrarPreguntaSuma() {
-      const preguntaDiv = document.getElementById("pregunta-suma");
-      const opcionesDiv = document.getElementById("opciones-suma");
-      const resultadoDiv = document.getElementById("resultado-suma");
-      resultadoDiv.innerHTML = "";
-      preguntaDiv.textContent = preguntasSuma[indicePreguntaSuma].pregunta;
-      opcionesDiv.innerHTML = "";
-      preguntasSuma[indicePreguntaSuma].opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => verificarRespuestaSuma(opcion);
-        opcionesDiv.appendChild(btn);
-      });
-    }
-
-    function mostrarPreguntaResta() {
-      const preguntaDiv = document.getElementById("pregunta-resta");
-      const opcionesDiv = document.getElementById("opciones-resta");
-      const resultadoDiv = document.getElementById("resultado-resta");
-      resultadoDiv.innerHTML = "";
-      preguntaDiv.textContent = preguntasResta[indicePreguntaResta].pregunta;
-      opcionesDiv.innerHTML = "";
-      preguntasResta[indicePreguntaResta].opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => verificarRespuestaResta(opcion);
-        opcionesDiv.appendChild(btn);
-      });
+    function reiniciarDivision() {
+      indicePreguntaDivision = 0;
+      correctasDivision = 0;
+      mostrarPreguntaDivision();
     }
 
     function mostrarSeccion(id) {
@@ -293,26 +235,7 @@
       if (id === "suma") reiniciarSuma();
       if (id === "resta") reiniciarResta();
       if (id === "multiplicacion") reiniciarMultiplicacion();
-    }
-
-    function volverMenu() {
-      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
-      document.getElementById('menu-principal').style.display = 'block';
-    }
-
-    function verificarRespuesta(respuesta, correcta = null) {
-      let correcto = correcta !== null ? respuesta === correcta : respuesta === 5;
-      const activo = document.querySelector('.seccion.activo');
-      const resultadoDiv = activo.querySelector('div[id^="resultado"]');
-      resultadoDiv.innerHTML = '';
-      const video = document.createElement('video');
-      video.src = correcto ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
-      video.autoplay = true;
-      video.muted = false;
-      video.playsInline = true;
-      video.volume = 1.0;
-      video.style.display = "block";
-      resultadoDiv.appendChild(video);
+      if (id === "division") reiniciarDivision();
     }
   </script>
 </body>
