@@ -75,8 +75,7 @@
     }
     #opciones-suma button,
     #opciones-resta button,
-    #opciones-multiplicacion button,
-    #opciones-division button {
+    #opciones-multiplicacion button {
       margin: 5px;
       padding: 10px 20px;
       font-size: 16px;
@@ -88,8 +87,7 @@
     }
     #opciones-suma button:hover,
     #opciones-resta button:hover,
-    #opciones-multiplicacion button:hover,
-    #opciones-division button:hover {
+    #opciones-multiplicacion button:hover {
       background-color: #1976d2;
     }
   </style>
@@ -134,8 +132,10 @@
 
     <div id="division" class="seccion">
       <h2>Juegos de División</h2>
-      <p id="pregunta-division"></p>
-      <div id="opciones-division"></div>
+      <p><strong>6 ÷ 2 = ?</strong></p>
+      <button onclick="verificarRespuesta(2, 3)">2</button>
+      <button onclick="verificarRespuesta(3, 3)">3</button>
+      <button onclick="verificarRespuesta(4, 3)">4</button>
       <div id="resultado-division"></div>
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
@@ -175,20 +175,12 @@
       { pregunta: "3 × 3 = ?", opciones: [6, 9, 12], correcta: 9 }
     ];
 
-    const preguntasDivision = [
-      { pregunta: "6 ÷ 2 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "8 ÷ 4 = ?", opciones: [1, 2, 3], correcta: 2 },
-      { pregunta: "9 ÷ 3 = ?", opciones: [2, 3, 4], correcta: 3 }
-    ];
-
     let indicePreguntaSuma = 0;
     let correctasSuma = 0;
     let indicePreguntaResta = 0;
     let correctasResta = 0;
     let indicePreguntaMultiplicacion = 0;
     let correctasMultiplicacion = 0;
-    let indicePreguntaDivision = 0;
-    let correctasDivision = 0;
 
     function mostrarPreguntaSuma() {
       const preguntaDiv = document.getElementById("pregunta-suma");
@@ -310,49 +302,6 @@
         '<h3>¡Sigue practicando! 💪</h3>';
     }
 
-    // ------- NUEVAS FUNCIONES PARA DIVISION -------
-
-    function mostrarPreguntaDivision() {
-      const preguntaDiv = document.getElementById("pregunta-division");
-      const opcionesDiv = document.getElementById("opciones-division");
-      const resultadoDiv = document.getElementById("resultado-division");
-      resultadoDiv.innerHTML = "";
-      preguntaDiv.textContent = preguntasDivision[indicePreguntaDivision].pregunta;
-      opcionesDiv.innerHTML = "";
-      preguntasDivision[indicePreguntaDivision].opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => verificarRespuestaDivision(opcion);
-        opcionesDiv.appendChild(btn);
-      });
-    }
-
-    function verificarRespuestaDivision(respuesta) {
-      const correcta = preguntasDivision[indicePreguntaDivision].correcta;
-      const resultadoDiv = document.getElementById("resultado-division");
-      resultadoDiv.innerHTML = "";
-      const video = document.createElement("video");
-      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
-      video.autoplay = true;
-      video.style.display = "block";
-      video.width = 150;
-      resultadoDiv.appendChild(video);
-      if (respuesta === correcta) correctasDivision++;
-      indicePreguntaDivision++;
-      video.onended = () => {
-        if (indicePreguntaDivision < preguntasDivision.length) mostrarPreguntaDivision();
-        else mostrarRecompensaDivision();
-      };
-    }
-
-    function mostrarRecompensaDivision() {
-      const resultadoDiv = document.getElementById("resultado-division");
-      resultadoDiv.innerHTML = correctasDivision === preguntasDivision.length ?
-        '<h3>🎉 ¡Muy bien! Has ganado un oro 🥇</h3><video src="videos/oro.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
-        '<h3>¡Sigue practicando! 💪</h3>';
-    }
-
-    // ---------- FUNCIONES DE REINICIO ----------
     function reiniciarSuma() {
       indicePreguntaSuma = 0;
       correctasSuma = 0;
@@ -371,22 +320,13 @@
       mostrarPreguntaMultiplicacion();
     }
 
-    function reiniciarDivision() {
-      indicePreguntaDivision = 0;
-      correctasDivision = 0;
-      mostrarPreguntaDivision();
-    }
-
-    // ---------- MOSTRAR SECCIÓN ----------
     function mostrarSeccion(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById(id).classList.add('activo');
       document.getElementById('menu-principal').style.display = 'none';
-
       if (id === "suma") reiniciarSuma();
       if (id === "resta") reiniciarResta();
       if (id === "multiplicacion") reiniciarMultiplicacion();
-      if (id === "division") reiniciarDivision();
     }
 
     function volverMenu() {
@@ -403,4 +343,11 @@
       video.src = correcto ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
       video.autoplay = true;
       video.muted = false;
-      video.playsInline
+      video.playsInline = true;
+      video.volume = 1.0;
+      video.style.display = "block";
+      resultadoDiv.appendChild(video);
+    }
+  </script>
+</body>
+</html>
