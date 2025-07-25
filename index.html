@@ -5,76 +5,182 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>App Matemáticas Unificada</title>
   <link rel="stylesheet" href="estilos.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .contenedor {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      max-width: 90%;
+      width: 600px;
+      text-align: center;
+    }
+    h1 { color: #0d47a1; }
+    .matito { color: #e91e63; }
+    .botones-nav {
+      margin: 20px 0;
+    }
+    .botones-nav button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .botones-nav button:hover { background: #1976d2; }
+    .seccion { display: none; }
+    .activo { display: block; }
+    .volver {
+      margin-top: 15px;
+      background: #9c27b0;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .volver:hover { background: #7b1fa2; }
+    video {
+      margin-top: 15px;
+      width: 100%;
+      max-width: 616px;
+      height: auto;
+      border-radius: 10px;
+    }
+    @media screen and (max-width: 600px) {
+      .contenedor { padding: 15px; }
+      .botones-nav button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+    .matito-img {
+      display: block;
+      margin: 10px auto;
+      border-radius: 50%;
+    }
+    #opciones-suma button,
+    #opciones-resta button,
+    #opciones-multiplicacion button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #opciones-suma button:hover,
+    #opciones-resta button:hover,
+    #opciones-multiplicacion button:hover {
+      background-color: #1976d2;
+    }
+  </style>
 </head>
 <body>
-  <div id="menu">
-    <h1>🎓 Juegos Matemáticos</h1>
-    <button onclick="mostrarSeccion('suma')">➕ Suma</button>
-    <button onclick="mostrarSeccion('resta')">➖ Resta</button>
-    <button onclick="mostrarSeccion('multiplicacion')">✖️ Multiplicación</button>
-    <button onclick="mostrarSeccion('division')">➗ División</button>
-  </div>
+  <div class="contenedor">
+    <h1>¡Hola! Soy <span class="matito">Isaac</span></h1>
+    <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
+    <p>¿Listo para jugar y aprender matemáticas?</p>
+    <div class="botones-nav" id="menu-principal">
+      <button onclick="mostrarSeccion('suma')">Suma</button>
+      <button onclick="mostrarSeccion('resta')">Resta</button>
+      <button onclick="mostrarSeccion('multiplicacion')">Multiplicación</button>
+      <button onclick="mostrarSeccion('division')">División</button>
+      <button onclick="mostrarSeccion('juego')">Juego Libre</button>
+      <button onclick="mostrarSeccion('tutorial')">Tutorial</button>
+    </div>
 
-  <div id="suma" class="seccion">
-    <h2>Juegos de Suma</h2>
-    <p id="pregunta-suma"></p>
-    <div id="opciones-suma"></div>
-    <div id="resultado-suma"></div>
-    <button class="volver" onclick="volverMenu()">Volver al menú</button>
-  </div>
+    <div id="suma" class="seccion">
+      <h2>Juegos de Suma</h2>
+      <p id="pregunta-suma"></p>
+      <div id="opciones-suma"></div>
+      <div id="resultado-suma"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
 
-  <div id="resta" class="seccion">
-    <h2>Juegos de Resta</h2>
-    <p id="pregunta-resta"></p>
-    <div id="opciones-resta"></div>
-    <div id="resultado-resta"></div>
-    <button class="volver" onclick="volverMenu()">Volver al menú</button>
-  </div>
+    <div id="resta" class="seccion">
+      <h2>Juegos de Resta</h2>
+      <p id="pregunta-resta"></p>
+      <div id="opciones-resta"></div>
+      <div id="resultado-resta"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
 
-  <div id="multiplicacion" class="seccion">
-    <h2>Juegos de Multiplicación</h2>
-    <p id="pregunta-multiplicacion"></p>
-    <div id="opciones-multiplicacion"></div>
-    <div id="resultado-multiplicacion"></div>
-    <button class="volver" onclick="volverMenu()">Volver al menú</button>
-  </div>
+    <div id="multiplicacion" class="seccion">
+      <h2>Juegos de Multiplicación</h2>
+      <p id="pregunta-multiplicacion"></p>
+      <div id="opciones-multiplicacion"></div>
+      <div id="resultado-multiplicacion"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
 
-  <div id="division" class="seccion">
-    <h2>Juegos de División</h2>
-    <p id="pregunta-division"></p>
-    <div id="opciones-division"></div>
-    <div id="resultado-division"></div>
-    <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    <div id="division" class="seccion">
+      <h2>Juegos de División</h2>
+      <p><strong>6 ÷ 2 = ?</strong></p>
+      <button onclick="verificarRespuesta(2, 3)">2</button>
+      <button onclick="verificarRespuesta(3, 3)">3</button>
+      <button onclick="verificarRespuesta(4, 3)">4</button>
+      <div id="resultado-division"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
+
+    <div id="juego" class="seccion">
+      <h2>¿Cuánto es 2 + 3?</h2>
+      <button onclick="verificarRespuesta(4)">4</button>
+      <button onclick="verificarRespuesta(5)">5</button>
+      <button onclick="verificarRespuesta(6)">6</button>
+      <div id="resultado-juego"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
+
+    <div id="tutorial" class="seccion">
+      <h2>🎥 Tutorial</h2>
+      <video src="videos/tutorial.mp4" controls></video>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
   </div>
 
   <script>
-    function mostrarSeccion(id) {
-      document.querySelectorAll('.seccion').forEach(seccion => {
-        seccion.style.display = 'none';
-      });
-      document.getElementById('menu').style.display = 'none';
-      document.getElementById(id).style.display = 'block';
-      if (id === "suma") reiniciarSuma();
-      if (id === "resta") reiniciarResta();
-      if (id === "multiplicacion") reiniciarMultiplicacion();
-      if (id === "division") reiniciarDivision();
-    }
-
-    function volverMenu() {
-      document.querySelectorAll('.seccion').forEach(seccion => {
-        seccion.style.display = 'none';
-      });
-      document.getElementById('menu').style.display = 'block';
-    }
-
-    // SUMA
     const preguntasSuma = [
       { pregunta: "2 + 3 = ?", opciones: [4, 5, 6], correcta: 5 },
-      { pregunta: "1 + 4 = ?", opciones: [5, 6, 7], correcta: 5 },
-      { pregunta: "3 + 2 = ?", opciones: [6, 5, 4], correcta: 5 }
+      { pregunta: "1 + 4 = ?", opciones: [4, 6, 5], correcta: 5 },
+      { pregunta: "3 + 3 = ?", opciones: [5, 6, 7], correcta: 6 }
     ];
+
+    const preguntasResta = [
+      { pregunta: "5 - 2 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "4 - 1 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 }
+    ];
+
+    const preguntasMultiplicacion = [
+      { pregunta: "2 × 3 = ?", opciones: [5, 6, 7], correcta: 6 },
+      { pregunta: "4 × 2 = ?", opciones: [6, 7, 8], correcta: 8 },
+      { pregunta: "3 × 3 = ?", opciones: [6, 9, 12], correcta: 9 }
+    ];
+
     let indicePreguntaSuma = 0;
     let correctasSuma = 0;
+    let indicePreguntaResta = 0;
+    let correctasResta = 0;
+    let indicePreguntaMultiplicacion = 0;
+    let correctasMultiplicacion = 0;
 
     function mostrarPreguntaSuma() {
       const preguntaDiv = document.getElementById("pregunta-suma");
@@ -116,21 +222,6 @@
         '<h3>¡Sigue practicando! 💪</h3>';
     }
 
-    function reiniciarSuma() {
-      indicePreguntaSuma = 0;
-      correctasSuma = 0;
-      mostrarPreguntaSuma();
-    }
-
-    // RESTA
-    const preguntasResta = [
-      { pregunta: "5 - 2 = ?", opciones: [3, 2, 4], correcta: 3 },
-      { pregunta: "4 - 1 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 }
-    ];
-    let indicePreguntaResta = 0;
-    let correctasResta = 0;
-
     function mostrarPreguntaResta() {
       const preguntaDiv = document.getElementById("pregunta-resta");
       const opcionesDiv = document.getElementById("opciones-resta");
@@ -171,21 +262,6 @@
         '<h3>¡Sigue practicando! 💪</h3>';
     }
 
-    function reiniciarResta() {
-      indicePreguntaResta = 0;
-      correctasResta = 0;
-      mostrarPreguntaResta();
-    }
-
-    // MULTIPLICACIÓN
-    const preguntasMultiplicacion = [
-      { pregunta: "3 × 2 = ?", opciones: [5, 6, 7], correcta: 6 },
-      { pregunta: "4 × 1 = ?", opciones: [2, 4, 6], correcta: 4 },
-      { pregunta: "2 × 5 = ?", opciones: [10, 8, 12], correcta: 10 }
-    ];
-    let indicePreguntaMultiplicacion = 0;
-    let correctasMultiplicacion = 0;
-
     function mostrarPreguntaMultiplicacion() {
       const preguntaDiv = document.getElementById("pregunta-multiplicacion");
       const opcionesDiv = document.getElementById("opciones-multiplicacion");
@@ -222,8 +298,20 @@
     function mostrarRecompensaMultiplicacion() {
       const resultadoDiv = document.getElementById("resultado-multiplicacion");
       resultadoDiv.innerHTML = correctasMultiplicacion === preguntasMultiplicacion.length ?
-        '<h3>🎉 ¡Muy bien! Has ganado un trofeo 🏆</h3><video src="videos/trofeo.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
+        '<h3>🎉 ¡Muy bien! Has ganado un billete 💵</h3><video src="videos/billete.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
         '<h3>¡Sigue practicando! 💪</h3>';
+    }
+
+    function reiniciarSuma() {
+      indicePreguntaSuma = 0;
+      correctasSuma = 0;
+      mostrarPreguntaSuma();
+    }
+
+    function reiniciarResta() {
+      indicePreguntaResta = 0;
+      correctasResta = 0;
+      mostrarPreguntaResta();
     }
 
     function reiniciarMultiplicacion() {
@@ -232,60 +320,33 @@
       mostrarPreguntaMultiplicacion();
     }
 
-    // DIVISIÓN
-    const preguntasDivision = [
-      { pregunta: "6 ÷ 2 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "9 ÷ 3 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "8 ÷ 4 = ?", opciones: [1, 2, 3], correcta: 2 }
-    ];
-
-    let indicePreguntaDivision = 0;
-    let correctasDivision = 0;
-
-    function mostrarPreguntaDivision() {
-      const preguntaDiv = document.getElementById("pregunta-division");
-      const opcionesDiv = document.getElementById("opciones-division");
-      const resultadoDiv = document.getElementById("resultado-division");
-      resultadoDiv.innerHTML = "";
-      preguntaDiv.textContent = preguntasDivision[indicePreguntaDivision].pregunta;
-      opcionesDiv.innerHTML = "";
-      preguntasDivision[indicePreguntaDivision].opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => verificarRespuestaDivision(opcion);
-        opcionesDiv.appendChild(btn);
-      });
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
+      document.getElementById(id).classList.add('activo');
+      document.getElementById('menu-principal').style.display = 'none';
+      if (id === "suma") reiniciarSuma();
+      if (id === "resta") reiniciarResta();
+      if (id === "multiplicacion") reiniciarMultiplicacion();
     }
 
-    function verificarRespuestaDivision(respuesta) {
-      const correcta = preguntasDivision[indicePreguntaDivision].correcta;
-      const resultadoDiv = document.getElementById("resultado-division");
-      resultadoDiv.innerHTML = "";
-      const video = document.createElement("video");
-      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
+    function volverMenu() {
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
+      document.getElementById('menu-principal').style.display = 'block';
+    }
+
+    function verificarRespuesta(respuesta, correcta = null) {
+      let correcto = correcta !== null ? respuesta === correcta : respuesta === 5;
+      const activo = document.querySelector('.seccion.activo');
+      const resultadoDiv = activo.querySelector('div[id^="resultado"]');
+      resultadoDiv.innerHTML = '';
+      const video = document.createElement('video');
+      video.src = correcto ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
       video.autoplay = true;
+      video.muted = false;
+      video.playsInline = true;
+      video.volume = 1.0;
       video.style.display = "block";
-      video.width = 150;
       resultadoDiv.appendChild(video);
-      if (respuesta === correcta) correctasDivision++;
-      indicePreguntaDivision++;
-      video.onended = () => {
-        if (indicePreguntaDivision < preguntasDivision.length) mostrarPreguntaDivision();
-        else mostrarRecompensaDivision();
-      };
-    }
-
-    function mostrarRecompensaDivision() {
-      const resultadoDiv = document.getElementById("resultado-division");
-      resultadoDiv.innerHTML = correctasDivision === preguntasDivision.length ?
-        '<h3>🎉 ¡Muy bien! Has ganado una pepita de oro 🪙</h3><video src="videos/oro.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
-        '<h3>¡Sigue practicando! 💪</h3>';
-    }
-
-    function reiniciarDivision() {
-      indicePreguntaDivision = 0;
-      correctasDivision = 0;
-      mostrarPreguntaDivision();
     }
   </script>
 </body>
