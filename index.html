@@ -2,202 +2,157 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>App Matemáticas Unificada</title>
-  <link rel="stylesheet" href="estilos.css" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f0f8ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .contenedor {
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      max-width: 90%;
-      width: 600px;
       text-align: center;
-    }
-    h1 {
-      color: #0d47a1;
-    }
-    .matito {
-      color: #e91e63;
-    }
-    .botones-nav {
-      margin: 20px 0;
-    }
-    .botones-nav button {
-      margin: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .botones-nav button:hover {
-      background: #1976d2;
+      background-color: #f2f2f2;
     }
     .seccion {
       display: none;
     }
-    .activo {
-      display: block;
-    }
-    .volver {
-      margin-top: 15px;
-      background: #9c27b0;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .volver:hover {
-      background: #7b1fa2;
-    }
-    video {
-      margin-top: 15px;
-      width: 100%;
-      max-width: 616px;
-      height: auto;
-      border-radius: 10px;
-    }
-    @media screen and (max-width: 600px) {
-      .contenedor {
-        padding: 15px;
-      }
-      .botones-nav button {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-    }
-    .matito-img {
+    .opcion {
       display: block;
       margin: 10px auto;
-      border-radius: 50%;
-    }
-    /* Estilos para opciones suma */
-    #opciones-suma button,
-    #opciones-resta button {
-      margin: 5px;
       padding: 10px 20px;
-      font-size: 16px;
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      font-size: 18px;
     }
-    #opciones-suma button:hover,
-    #opciones-resta button:hover {
-      background-color: #1976d2;
+    video {
+      margin: 10px auto;
+      display: block;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="contenedor">
-    <h1>¡Hola! Soy <span class="matito">Isaac</span></h1>
-    <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
-    <p>¿Listo para jugar y aprender matemáticas?</p>
-    <div class="botones-nav" id="menu-principal">
-      <button onclick="mostrarSeccion('suma')">Suma</button>
-      <button onclick="mostrarSeccion('resta')">Resta</button>
-      <button onclick="mostrarSeccion('multiplicacion')">Multiplicación</button>
-      <button onclick="mostrarSeccion('division')">División</button>
-      <button onclick="mostrarSeccion('juego')">Juego Libre</button>
-      <button onclick="mostrarSeccion('tutorial')">Tutorial</button>
-    </div>
+  <h1>App Matemáticas Unificada</h1>
 
-    <!-- SUMA -->
-    <div id="suma" class="seccion">
-      <h2>Juegos de Suma</h2>
-      <p id="pregunta-suma"></p>
-      <div id="opciones-suma"></div>
-      <div id="resultado-suma"></div>
-      <button class="volver" onclick="volverMenu()">Volver al menú</button>
-    </div>
+  <button onclick="mostrarSeccion('suma')">Suma</button>
+  <button onclick="mostrarSeccion('resta')">Resta</button>
+  <button onclick="mostrarSeccion('multiplicacion')">Multiplicación</button>
+  <button onclick="mostrarSeccion('division')">División</button>
+  <button onclick="mostrarSeccion('juego')">Juego Libre</button>
+  <button onclick="mostrarSeccion('tutorial')">Tutorial</button>
 
-    <!-- RESTA -->
-    <div id="resta" class="seccion">
-      <h2>Juegos de Resta</h2>
-      <p id="pregunta-resta"></p>
-      <div id="opciones-resta"></div>
-      <div id="resultado-resta"></div>
-      <button class="volver" onclick="volverMenu()">Volver al menú</button>
-    </div>
+  <div id="suma" class="seccion">
+    <h2>Prueba de Suma</h2>
+    <div id="preguntaSuma"></div>
+    <div id="resultadoSuma"></div>
+  </div>
 
-    <!-- MULTIPLICACIÓN, DIVISIÓN, JUEGO LIBRE, TUTORIAL -->
-    <!-- ... sin cambios ... -->
+  <div id="resta" class="seccion">
+    <h2>Prueba de Resta</h2>
+    <div id="preguntaResta"></div>
+    <div id="resultadoResta"></div>
+  </div>
 
+  <div id="multiplicacion" class="seccion">
+    <h2>Sección en construcción</h2>
+  </div>
+
+  <div id="division" class="seccion">
+    <h2>Sección en construcción</h2>
+  </div>
+
+  <div id="juego" class="seccion">
+    <h2>Sección en construcción</h2>
+  </div>
+
+  <div id="tutorial" class="seccion">
+    <video width="300" controls autoplay>
+      <source src="videos/tutorial.mp4" type="video/mp4" />
+      Tu navegador no soporta videos.
+    </video>
   </div>
 
   <script>
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.seccion').forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+      if (id === 'suma') mostrarPreguntaSuma();
+      if (id === 'resta') mostrarPreguntaResta();
+    }
+
     const preguntasSuma = [
-      { pregunta: "2 + 3 = ?", opciones: [4, 5, 6], correcta: 5 },
-      { pregunta: "1 + 4 = ?", opciones: [4, 6, 5], correcta: 5 },
-      { pregunta: "3 + 3 = ?", opciones: [5, 6, 7], correcta: 6 }
+      { pregunta: "2 + 3 = ?", opciones: [5, 4, 6], correcta: 5 },
+      { pregunta: "7 + 1 = ?", opciones: [8, 9, 6], correcta: 8 },
+      { pregunta: "4 + 4 = ?", opciones: [6, 7, 8], correcta: 8 },
     ];
-
-    const preguntasResta = [
-      { pregunta: "5 - 2 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "4 - 1 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "6 - 2 = ?", opciones: [3, 4, 5], correcta: 4 }
-    ];
-
     let indicePreguntaSuma = 0;
-    let correctasSuma = 0;
-    let indicePreguntaResta = 0;
-    let correctasResta = 0;
 
     function mostrarPreguntaSuma() {
-      mostrarPregunta(preguntasSuma, indicePreguntaSuma, "pregunta-suma", "opciones-suma", verificarRespuestaSuma);
-    }
-
-    function mostrarPreguntaResta() {
-      mostrarPregunta(preguntasResta, indicePreguntaResta, "pregunta-resta", "opciones-resta", verificarRespuestaResta);
-    }
-
-    function mostrarPregunta(preguntas, indice, idPregunta, idOpciones, verificarFuncion) {
-      const preguntaDiv = document.getElementById(idPregunta);
-      const opcionesDiv = document.getElementById(idOpciones);
-      const preguntaActual = preguntas[indice];
-
-      preguntaDiv.textContent = preguntaActual.pregunta;
-      opcionesDiv.innerHTML = "";
-
-      preguntaActual.opciones.forEach(opcion => {
+      const div = document.getElementById("preguntaSuma");
+      const pregunta = preguntasSuma[indicePreguntaSuma];
+      div.innerHTML = `<p>${pregunta.pregunta}</p>`;
+      pregunta.opciones.forEach(op => {
         const btn = document.createElement("button");
-        btn.textContent = opcion;
-        btn.onclick = () => verificarFuncion(opcion);
-        opcionesDiv.appendChild(btn);
+        btn.className = "opcion";
+        btn.textContent = op;
+        btn.onclick = () => verificarRespuestaGeneral(
+          preguntasSuma,
+          op,
+          indicePreguntaSuma,
+          "resultadoSuma",
+          () => indicePreguntaSuma++,
+          mostrarPreguntaSuma,
+          mostrarRecompensaSuma
+        );
+        div.appendChild(btn);
       });
     }
 
-    function verificarRespuestaSuma(respuesta) {
-      verificarRespuestaGeneral(preguntasSuma, respuesta, indicePreguntaSuma, "resultado-suma", () => {
-        indicePreguntaSuma++;
-        correctasSuma++;
-      }, mostrarPreguntaSuma, mostrarRecompensaSuma);
+    function mostrarRecompensaSuma() {
+      const resultadoDiv = document.getElementById("resultadoSuma");
+      resultadoDiv.innerHTML = `
+        <video width="200" autoplay>
+          <source src="videos/estrella.mp4" type="video/mp4" />
+        </video>
+      `;
+      indicePreguntaSuma = 0;
     }
 
-    function verificarRespuestaResta(respuesta) {
-      verificarRespuestaGeneral(preguntasResta, respuesta, indicePreguntaResta, "resultado-resta", () => {
-        indicePreguntaResta++;
-        correctasResta++;
-      }, mostrarPreguntaResta, mostrarRecompensaResta);
+    const preguntasResta = [
+      { pregunta: "5 - 2 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "9 - 4 = ?", opciones: [4, 5, 6], correcta: 5 },
+      { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 },
+    ];
+    let indicePreguntaResta = 0;
+
+    function mostrarPreguntaResta() {
+      const div = document.getElementById("preguntaResta");
+      const pregunta = preguntasResta[indicePreguntaResta];
+      div.innerHTML = `<p>${pregunta.pregunta}</p>`;
+      pregunta.opciones.forEach(op => {
+        const btn = document.createElement("button");
+        btn.className = "opcion";
+        btn.textContent = op;
+        btn.onclick = () => verificarRespuestaGeneral(
+          preguntasResta,
+          op,
+          indicePreguntaResta,
+          "resultadoResta",
+          () => indicePreguntaResta++,
+          mostrarPreguntaResta,
+          mostrarRecompensaResta
+        );
+        div.appendChild(btn);
+      });
+    }
+
+    function mostrarRecompensaResta() {
+      const resultadoDiv = document.getElementById("resultadoResta");
+      resultadoDiv.innerHTML = `
+        <video width="200" autoplay>
+          <source src="videos/corona.mp4" type="video/mp4" />
+        </video>
+      `;
+      indicePreguntaResta = 0;
     }
 
     function verificarRespuestaGeneral(preguntas, respuesta, indice, idResultado, actualizar, mostrarPregunta, mostrarRecompensa) {
@@ -225,6 +180,7 @@
       resultadoDiv.appendChild(video);
 
       video.addEventListener("ended", () => {
+        resultadoDiv.innerHTML = ""; // ✅ Limpia el video después de reproducirse
         if (indice + 1 < preguntas.length) {
           mostrarPregunta();
         } else {
@@ -232,57 +188,6 @@
         }
       });
     }
-
-    function mostrarRecompensaSuma() {
-      mostrarRecompensa("resultado-suma", correctasSuma, preguntasSuma.length, "estrella.mp4");
-    }
-
-    function mostrarRecompensaResta() {
-      mostrarRecompensa("resultado-resta", correctasResta, preguntasResta.length, "corona.mp4");
-    }
-
-    function mostrarRecompensa(idResultado, correctas, total, videoNombre) {
-      const resultadoDiv = document.getElementById(idResultado);
-      resultadoDiv.innerHTML = correctas === total ? `<h3>🎉 ¡Muy bien! Has ganado un premio 🏆</h3>` : `<h3>¡Sigue intentando! 💪</h3>`;
-      if (correctas === total) {
-        const video = document.createElement("video");
-        video.src = `videos/${videoNombre}`;
-        video.autoplay = true;
-        video.muted = false;
-        video.playsInline = true;
-        video.volume = 1.0;
-        video.style.display = "block";
-        video.style.margin = "10px auto";
-        video.width = 150;
-        resultadoDiv.appendChild(video);
-      }
-    }
-
-    function reiniciarSuma() {
-      indicePreguntaSuma = 0;
-      correctasSuma = 0;
-      mostrarPreguntaSuma();
-    }
-
-    function reiniciarResta() {
-      indicePreguntaResta = 0;
-      correctasResta = 0;
-      mostrarPreguntaResta();
-    }
-
-    function mostrarSeccion(id) {
-      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
-      document.getElementById(id).classList.add('activo');
-      document.getElementById('menu-principal').style.display = 'none';
-      if (id === "suma") reiniciarSuma();
-      if (id === "resta") reiniciarResta();
-    }
-
-    function volverMenu() {
-      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
-      document.getElementById('menu-principal').style.display = 'block';
-    }
   </script>
 </body>
 </html>
-
