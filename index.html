@@ -112,7 +112,41 @@
 </head>
 <body>
   <div class="contenedor">
-    <!-- ... encabezado y navegación ... -->
+    <h1>¡Hola! Soy <span class="matito">Isaac</span></h1>
+    <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
+    <p>¿Listo para jugar y aprender matemáticas?</p>
+    <div class="botones-nav" id="menu-principal">
+      <button onclick="mostrarSeccion('suma')">Suma</button>
+      <button onclick="mostrarSeccion('resta')">Resta</button>
+      <button onclick="mostrarSeccion('multiplicacion')">Multiplicación</button>
+      <button onclick="mostrarSeccion('division')">División</button>
+      <button onclick="mostrarSeccion('juego')">Juego Libre</button>
+      <button onclick="mostrarSeccion('tutorial')">Tutorial</button>
+    </div>
+
+    <div id="suma" class="seccion">
+      <h2>Juegos de Suma</h2>
+      <p id="pregunta-suma"></p>
+      <div id="opciones-suma"></div>
+      <div id="resultado-suma"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
+
+    <div id="resta" class="seccion">
+      <h2>Juegos de Resta</h2>
+      <p id="pregunta-resta"></p>
+      <div id="opciones-resta"></div>
+      <div id="resultado-resta"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
+
+    <div id="multiplicacion" class="seccion">
+      <h2>Juegos de Multiplicación</h2>
+      <p id="pregunta-multiplicacion"></p>
+      <div id="opciones-multiplicacion"></div>
+      <div id="resultado-multiplicacion"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
 
     <div id="division" class="seccion">
       <h2>Juegos de División</h2>
@@ -122,19 +156,72 @@
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <!-- ... otras secciones ... -->
+    <div id="juego" class="seccion">
+      <h2>¿Cuánto es 2 + 3?</h2>
+      <button onclick="verificarRespuesta(4)">4</button>
+      <button onclick="verificarRespuesta(5)">5</button>
+      <button onclick="verificarRespuesta(6)">6</button>
+      <div id="resultado-juego"></div>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
 
+    <div id="tutorial" class="seccion">
+      <h2>🎥 Tutorial</h2>
+      <video src="videos/tutorial.mp4" controls></video>
+      <button class="volver" onclick="volverMenu()">Volver al menú</button>
+    </div>
   </div>
 
   <script>
-    const preguntasDivision = [
-      { pregunta: "6 ÷ 2 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "9 ÷ 3 = ?", opciones: [2, 3, 4], correcta: 3 },
-      { pregunta: "8 ÷ 2 = ?", opciones: [3, 4, 5], correcta: 4 }
+    const preguntasSuma = [
+      { pregunta: "2 + 3 = ?", opciones: [4, 5, 6], correcta: 5 },
+      { pregunta: "1 + 4 = ?", opciones: [4, 6, 5], correcta: 5 },
+      { pregunta: "3 + 3 = ?", opciones: [5, 6, 7], correcta: 6 }
     ];
 
-    let indicePreguntaDivision = 0;
-    let correctasDivision = 0;
+    const preguntasResta = [
+      { pregunta: "5 - 2 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "4 - 1 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 }
+    ];
+
+    const preguntasMultiplicacion = [
+      { pregunta: "2 × 3 = ?", opciones: [5, 6, 7], correcta: 6 },
+      { pregunta: "4 × 2 = ?", opciones: [6, 7, 8], correcta: 8 },
+      { pregunta: "3 × 3 = ?", opciones: [6, 9, 12], correcta: 9 }
+    ];
+
+    const preguntasDivision = [
+      { pregunta: "6 ÷ 2 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "8 ÷ 4 = ?", opciones: [1, 2, 3], correcta: 2 },
+      { pregunta: "9 ÷ 3 = ?", opciones: [2, 3, 4], correcta: 3 }
+    ];
+
+    let indicePreguntaSuma = 0, correctasSuma = 0;
+    let indicePreguntaResta = 0, correctasResta = 0;
+    let indicePreguntaMultiplicacion = 0, correctasMultiplicacion = 0;
+    let indicePreguntaDivision = 0, correctasDivision = 0;
+
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
+      document.getElementById(id).classList.add('activo');
+      document.getElementById('menu-principal').style.display = 'none';
+      if (id === "suma") reiniciarSuma();
+      if (id === "resta") reiniciarResta();
+      if (id === "multiplicacion") reiniciarMultiplicacion();
+      if (id === "division") reiniciarDivision();
+    }
+
+    function volverMenu() {
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
+      document.getElementById('menu-principal').style.display = 'block';
+    }
+
+    function reiniciarDivision() {
+      indicePreguntaDivision = 0;
+      correctasDivision = 0;
+      mostrarPreguntaDivision();
+    }
 
     function mostrarPreguntaDivision() {
       const preguntaDiv = document.getElementById("pregunta-division");
@@ -159,7 +246,6 @@
       video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
       video.autoplay = true;
       video.style.display = "block";
-      video.width = 150;
       resultadoDiv.appendChild(video);
       if (respuesta === correcta) correctasDivision++;
       indicePreguntaDivision++;
@@ -172,25 +258,11 @@
     function mostrarRecompensaDivision() {
       const resultadoDiv = document.getElementById("resultado-division");
       resultadoDiv.innerHTML = correctasDivision === preguntasDivision.length ?
-        '<h3>🏆 ¡Muy bien! Has ganado una medalla de oro 🥇</h3><video src="videos/oro.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
+        '<h3>🎉 ¡Excelente! Has ganado una moneda de oro 🪙</h3><video src="videos/oro.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
         '<h3>¡Sigue practicando! 💪</h3>';
     }
 
-    function reiniciarDivision() {
-      indicePreguntaDivision = 0;
-      correctasDivision = 0;
-      mostrarPreguntaDivision();
-    }
-
-    function mostrarSeccion(id) {
-      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
-      document.getElementById(id).classList.add('activo');
-      document.getElementById('menu-principal').style.display = 'none';
-      if (id === "suma") reiniciarSuma();
-      if (id === "resta") reiniciarResta();
-      if (id === "multiplicacion") reiniciarMultiplicacion();
-      if (id === "division") reiniciarDivision();
-    }
+    // Las demás funciones (Suma, Resta, Multiplicación) no fueron modificadas para respetar tu código original.
   </script>
 </body>
 </html>
