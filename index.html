@@ -90,7 +90,8 @@
       border-radius: 50%;
     }
     #opciones-suma button,
-    #opciones-resta button {
+    #opciones-resta button,
+    #opciones-multiplicacion button {
       margin: 5px;
       padding: 10px 20px;
       font-size: 16px;
@@ -101,7 +102,8 @@
       cursor: pointer;
     }
     #opciones-suma button:hover,
-    #opciones-resta button:hover {
+    #opciones-resta button:hover,
+    #opciones-multiplicacion button:hover {
       background-color: #1976d2;
     }
   </style>
@@ -138,10 +140,8 @@
 
     <div id="multiplicacion" class="seccion">
       <h2>Juegos de Multiplicación</h2>
-      <p><strong>2 × 3 = ?</strong></p>
-      <button onclick="verificarRespuesta(5, 6)">5</button>
-      <button onclick="verificarRespuesta(6, 6)">6</button>
-      <button onclick="verificarRespuesta(7, 6)">7</button>
+      <p id="pregunta-multiplicacion"></p>
+      <div id="opciones-multiplicacion"></div>
       <div id="resultado-multiplicacion"></div>
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
@@ -185,10 +185,76 @@
       { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 }
     ];
 
+    const preguntasMultiplicacion = [
+      { pregunta: "2 × 3 = ?", opciones: [5, 6, 7], correcta: 6 },
+      { pregunta: "4 × 2 = ?", opciones: [6, 7, 8], correcta: 8 },
+      { pregunta: "3 × 3 = ?", opciones: [6, 9, 12], correcta: 9 }
+    ];
+
     let indicePreguntaSuma = 0;
     let correctasSuma = 0;
     let indicePreguntaResta = 0;
     let correctasResta = 0;
+    let indicePreguntaMultiplicacion = 0;
+    let correctasMultiplicacion = 0;
+
+    function mostrarPreguntaMultiplicacion() {
+      const preguntaDiv = document.getElementById("pregunta-multiplicacion");
+      const opcionesDiv = document.getElementById("opciones-multiplicacion");
+      const resultadoDiv = document.getElementById("resultado-multiplicacion");
+      resultadoDiv.innerHTML = "";
+      preguntaDiv.textContent = preguntasMultiplicacion[indicePreguntaMultiplicacion].pregunta;
+      opcionesDiv.innerHTML = "";
+      preguntasMultiplicacion[indicePreguntaMultiplicacion].opciones.forEach(opcion => {
+        const btn = document.createElement("button");
+        btn.textContent = opcion;
+        btn.onclick = () => verificarRespuestaMultiplicacion(opcion);
+        opcionesDiv.appendChild(btn);
+      });
+    }
+
+    function verificarRespuestaMultiplicacion(respuesta) {
+      const correcta = preguntasMultiplicacion[indicePreguntaMultiplicacion].correcta;
+      const resultadoDiv = document.getElementById("resultado-multiplicacion");
+      resultadoDiv.innerHTML = "";
+      const video = document.createElement("video");
+      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
+      video.autoplay = true;
+      video.style.display = "block";
+      video.width = 150;
+      resultadoDiv.appendChild(video);
+      if (respuesta === correcta) correctasMultiplicacion++;
+      indicePreguntaMultiplicacion++;
+      video.onended = () => {
+        if (indicePreguntaMultiplicacion < preguntasMultiplicacion.length) mostrarPreguntaMultiplicacion();
+        else mostrarRecompensaMultiplicacion();
+      };
+    }
+
+    function mostrarRecompensaMultiplicacion() {
+      const resultadoDiv = document.getElementById("resultado-multiplicacion");
+      resultadoDiv.innerHTML = correctasMultiplicacion === preguntasMultiplicacion.length ?
+        '<h3>🎉 ¡Muy bien! Has ganado un billete 💵</h3><video src="videos/billete.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
+        '<h3>¡Sigue practicando! 💪</h3>';
+    }
+
+    function reiniciarSuma() {
+      indicePreguntaSuma = 0;
+      correctasSuma = 0;
+      mostrarPreguntaSuma();
+    }
+
+    function reiniciarResta() {
+      indicePreguntaResta = 0;
+      correctasResta = 0;
+      mostrarPreguntaResta();
+    }
+
+    function reiniciarMultiplicacion() {
+      indicePreguntaMultiplicacion = 0;
+      correctasMultiplicacion = 0;
+      mostrarPreguntaMultiplicacion();
+    }
 
     function mostrarPreguntaSuma() {
       const preguntaDiv = document.getElementById("pregunta-suma");
@@ -220,74 +286,13 @@
       });
     }
 
-    function verificarRespuestaSuma(respuesta) {
-      const correcta = preguntasSuma[indicePreguntaSuma].correcta;
-      const resultadoDiv = document.getElementById("resultado-suma");
-      resultadoDiv.innerHTML = "";
-      const video = document.createElement("video");
-      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
-      video.autoplay = true;
-      video.style.display = "block";
-      video.width = 150;
-      resultadoDiv.appendChild(video);
-      if (respuesta === correcta) correctasSuma++;
-      indicePreguntaSuma++;
-      video.onended = () => {
-        if (indicePreguntaSuma < preguntasSuma.length) mostrarPreguntaSuma();
-        else mostrarRecompensaSuma();
-      };
-    }
-
-    function verificarRespuestaResta(respuesta) {
-      const correcta = preguntasResta[indicePreguntaResta].correcta;
-      const resultadoDiv = document.getElementById("resultado-resta");
-      resultadoDiv.innerHTML = "";
-      const video = document.createElement("video");
-      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
-      video.autoplay = true;
-      video.style.display = "block";
-      video.width = 150;
-      resultadoDiv.appendChild(video);
-      if (respuesta === correcta) correctasResta++;
-      indicePreguntaResta++;
-      video.onended = () => {
-        if (indicePreguntaResta < preguntasResta.length) mostrarPreguntaResta();
-        else mostrarRecompensaResta();
-      };
-    }
-
-    function mostrarRecompensaSuma() {
-      const resultadoDiv = document.getElementById("resultado-suma");
-      resultadoDiv.innerHTML = correctasSuma === preguntasSuma.length ?
-        '<h3>🎉 ¡Muy bien! Has ganado una estrella ⭐</h3><video src="videos/estrella.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
-        '<h3>¡Sigue intentando! 💪</h3>';
-    }
-
-    function mostrarRecompensaResta() {
-      const resultadoDiv = document.getElementById("resultado-resta");
-      resultadoDiv.innerHTML = correctasResta === preguntasResta.length ?
-        '<h3>🎉 ¡Excelente! Has ganado una corona 👑</h3><video src="videos/corona.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
-        '<h3>¡Sigue practicando! 💪</h3>';
-    }
-
-    function reiniciarSuma() {
-      indicePreguntaSuma = 0;
-      correctasSuma = 0;
-      mostrarPreguntaSuma();
-    }
-
-    function reiniciarResta() {
-      indicePreguntaResta = 0;
-      correctasResta = 0;
-      mostrarPreguntaResta();
-    }
-
     function mostrarSeccion(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById(id).classList.add('activo');
       document.getElementById('menu-principal').style.display = 'none';
       if (id === "suma") reiniciarSuma();
       if (id === "resta") reiniciarResta();
+      if (id === "multiplicacion") reiniciarMultiplicacion();
     }
 
     function volverMenu() {
