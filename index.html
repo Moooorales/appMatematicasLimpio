@@ -89,8 +89,8 @@
       margin: 10px auto;
       border-radius: 50%;
     }
-    /* Estilos para opciones suma */
-    #opciones-suma button {
+    #opciones-suma button,
+    #opciones-resta button {
       margin: 5px;
       padding: 10px 20px;
       font-size: 16px;
@@ -100,7 +100,8 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    #opciones-suma button:hover {
+    #opciones-suma button:hover,
+    #opciones-resta button:hover {
       background-color: #1976d2;
     }
   </style>
@@ -108,12 +109,8 @@
 <body>
   <div class="contenedor">
     <h1>¡Hola! Soy <span class="matito">Isaac</span></h1>
-
-    <!-- Imagen -->
     <img src="imagenes/matito.png" alt="Matito" class="matito-img" width="150" />
-
     <p>¿Listo para jugar y aprender matemáticas?</p>
-
     <div class="botones-nav" id="menu-principal">
       <button onclick="mostrarSeccion('suma')">Suma</button>
       <button onclick="mostrarSeccion('resta')">Resta</button>
@@ -123,7 +120,6 @@
       <button onclick="mostrarSeccion('tutorial')">Tutorial</button>
     </div>
 
-    <!-- SUMA -->
     <div id="suma" class="seccion">
       <h2>Juegos de Suma</h2>
       <p id="pregunta-suma"></p>
@@ -132,18 +128,14 @@
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <!-- RESTA -->
     <div id="resta" class="seccion">
       <h2>Juegos de Resta</h2>
-      <p><strong>5 - 2 = ?</strong></p>
-      <button onclick="verificarRespuesta(2, 3)">2</button>
-      <button onclick="verificarRespuesta(3, 3)">3</button>
-      <button onclick="verificarRespuesta(4, 3)">4</button>
+      <p id="pregunta-resta"></p>
+      <div id="opciones-resta"></div>
       <div id="resultado-resta"></div>
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <!-- MULTIPLICACIÓN -->
     <div id="multiplicacion" class="seccion">
       <h2>Juegos de Multiplicación</h2>
       <p><strong>2 × 3 = ?</strong></p>
@@ -154,7 +146,6 @@
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <!-- DIVISIÓN -->
     <div id="division" class="seccion">
       <h2>Juegos de División</h2>
       <p><strong>6 ÷ 2 = ?</strong></p>
@@ -165,7 +156,6 @@
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <!-- JUEGO LIBRE -->
     <div id="juego" class="seccion">
       <h2>¿Cuánto es 2 + 3?</h2>
       <button onclick="verificarRespuesta(4)">4</button>
@@ -175,7 +165,6 @@
       <button class="volver" onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <!-- TUTORIAL -->
     <div id="tutorial" class="seccion">
       <h2>🎥 Tutorial</h2>
       <video src="videos/tutorial.mp4" controls></video>
@@ -184,96 +173,101 @@
   </div>
 
   <script>
-    // Preguntas y lógica para SUMA con recompensas
     const preguntasSuma = [
       { pregunta: "2 + 3 = ?", opciones: [4, 5, 6], correcta: 5 },
       { pregunta: "1 + 4 = ?", opciones: [4, 6, 5], correcta: 5 },
       { pregunta: "3 + 3 = ?", opciones: [5, 6, 7], correcta: 6 }
     ];
 
+    const preguntasResta = [
+      { pregunta: "5 - 2 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "4 - 1 = ?", opciones: [2, 3, 4], correcta: 3 },
+      { pregunta: "6 - 3 = ?", opciones: [2, 3, 4], correcta: 3 }
+    ];
+
     let indicePreguntaSuma = 0;
     let correctasSuma = 0;
+    let indicePreguntaResta = 0;
+    let correctasResta = 0;
 
     function mostrarPreguntaSuma() {
       const preguntaDiv = document.getElementById("pregunta-suma");
       const opcionesDiv = document.getElementById("opciones-suma");
       const resultadoDiv = document.getElementById("resultado-suma");
-
-      resultadoDiv.innerHTML = ""; // limpiar resultado
-
-      // Mostrar la pregunta actual
+      resultadoDiv.innerHTML = "";
       preguntaDiv.textContent = preguntasSuma[indicePreguntaSuma].pregunta;
-
-      // Limpiar opciones previas
       opcionesDiv.innerHTML = "";
-
-      // Crear botones para opciones
       preguntasSuma[indicePreguntaSuma].opciones.forEach(opcion => {
         const btn = document.createElement("button");
         btn.textContent = opcion;
         btn.onclick = () => verificarRespuestaSuma(opcion);
-        btn.style.margin = "5px";
+        opcionesDiv.appendChild(btn);
+      });
+    }
+
+    function mostrarPreguntaResta() {
+      const preguntaDiv = document.getElementById("pregunta-resta");
+      const opcionesDiv = document.getElementById("opciones-resta");
+      const resultadoDiv = document.getElementById("resultado-resta");
+      resultadoDiv.innerHTML = "";
+      preguntaDiv.textContent = preguntasResta[indicePreguntaResta].pregunta;
+      opcionesDiv.innerHTML = "";
+      preguntasResta[indicePreguntaResta].opciones.forEach(opcion => {
+        const btn = document.createElement("button");
+        btn.textContent = opcion;
+        btn.onclick = () => verificarRespuestaResta(opcion);
         opcionesDiv.appendChild(btn);
       });
     }
 
     function verificarRespuestaSuma(respuesta) {
-      const resultadoDiv = document.getElementById("resultado-suma");
       const correcta = preguntasSuma[indicePreguntaSuma].correcta;
-
+      const resultadoDiv = document.getElementById("resultado-suma");
       resultadoDiv.innerHTML = "";
-
       const video = document.createElement("video");
+      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
       video.autoplay = true;
-      video.muted = false;
-      video.playsInline = true;
-      video.volume = 1.0;
       video.style.display = "block";
-      video.style.margin = "10px auto";
       video.width = 150;
-
-      if (respuesta === correcta) {
-        correctasSuma++;
-        video.src = "videos/correcto.mp4";
-      } else {
-        video.src = "videos/incorrecto2.mp4";
-      }
-
       resultadoDiv.appendChild(video);
-
+      if (respuesta === correcta) correctasSuma++;
       indicePreguntaSuma++;
+      video.onended = () => {
+        if (indicePreguntaSuma < preguntasSuma.length) mostrarPreguntaSuma();
+        else mostrarRecompensaSuma();
+      };
+    }
 
-      // Esperar a que el video termine para pasar a la siguiente pregunta o mostrar recompensa
-      video.addEventListener("ended", () => {
-        if (indicePreguntaSuma < preguntasSuma.length) {
-          mostrarPreguntaSuma();
-        } else {
-          mostrarRecompensaSuma();
-        }
-      });
+    function verificarRespuestaResta(respuesta) {
+      const correcta = preguntasResta[indicePreguntaResta].correcta;
+      const resultadoDiv = document.getElementById("resultado-resta");
+      resultadoDiv.innerHTML = "";
+      const video = document.createElement("video");
+      video.src = respuesta === correcta ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
+      video.autoplay = true;
+      video.style.display = "block";
+      video.width = 150;
+      resultadoDiv.appendChild(video);
+      if (respuesta === correcta) correctasResta++;
+      indicePreguntaResta++;
+      video.onended = () => {
+        if (indicePreguntaResta < preguntasResta.length) mostrarPreguntaResta();
+        else mostrarRecompensaResta();
+      };
     }
 
     function mostrarRecompensaSuma() {
       const resultadoDiv = document.getElementById("resultado-suma");
-      resultadoDiv.innerHTML = "";
+      resultadoDiv.innerHTML = correctasSuma === preguntasSuma.length ?
+        '<h3>🎉 ¡Muy bien! Has ganado una estrella ⭐</h3><video src="videos/estrella.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
+        '<h3>¡Sigue intentando! 💪</h3>';
+    }
 
-      if (correctasSuma === preguntasSuma.length) {
-        resultadoDiv.innerHTML = `<h3>🎉 ¡Muy bien! Has ganado una estrella ⭐</h3>`;
-
-        const videoEstrella = document.createElement("video");
-        videoEstrella.src = "videos/estrella.mp4"; // video de la estrella
-        videoEstrella.autoplay = true;
-        videoEstrella.muted = false;
-        videoEstrella.playsInline = true;
-        videoEstrella.volume = 1.0;
-        videoEstrella.style.display = "block";
-        videoEstrella.style.margin = "10px auto";
-        videoEstrella.width = 150;
-
-        resultadoDiv.appendChild(videoEstrella);
-      } else {
-        resultadoDiv.innerHTML = `<h3>¡Sigue intentando! 💪</h3>`;
-      }
+    function mostrarRecompensaResta() {
+      const resultadoDiv = document.getElementById("resultado-resta");
+      resultadoDiv.innerHTML = correctasResta === preguntasResta.length ?
+        '<h3>🎉 ¡Excelente! Has ganado una corona 👑</h3><video src="videos/corona.mp4" autoplay style="display:block;margin:auto;" width="150"></video>' :
+        '<h3>¡Sigue practicando! 💪</h3>';
     }
 
     function reiniciarSuma() {
@@ -282,30 +276,30 @@
       mostrarPreguntaSuma();
     }
 
-    // Mostrar sección y reiniciar suma si es la sección suma
+    function reiniciarResta() {
+      indicePreguntaResta = 0;
+      correctasResta = 0;
+      mostrarPreguntaResta();
+    }
+
     function mostrarSeccion(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById(id).classList.add('activo');
       document.getElementById('menu-principal').style.display = 'none';
-
-      if (id === "suma") {
-        reiniciarSuma();
-      }
+      if (id === "suma") reiniciarSuma();
+      if (id === "resta") reiniciarResta();
     }
 
-    // Volver al menú principal
     function volverMenu() {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activo'));
       document.getElementById('menu-principal').style.display = 'block';
     }
 
-    // Función para verificar respuesta en otros juegos
     function verificarRespuesta(respuesta, correcta = null) {
       let correcto = correcta !== null ? respuesta === correcta : respuesta === 5;
       const activo = document.querySelector('.seccion.activo');
       const resultadoDiv = activo.querySelector('div[id^="resultado"]');
       resultadoDiv.innerHTML = '';
-
       const video = document.createElement('video');
       video.src = correcto ? "videos/correcto.mp4" : "videos/incorrecto2.mp4";
       video.autoplay = true;
@@ -313,7 +307,6 @@
       video.playsInline = true;
       video.volume = 1.0;
       video.style.display = "block";
-
       resultadoDiv.appendChild(video);
     }
   </script>
